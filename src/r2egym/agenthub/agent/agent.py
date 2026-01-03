@@ -151,7 +151,7 @@ class Agent:
         return token_count
 
     def model_query(
-        self, messages: List[Dict[str, str]], temperature: float = 0,) -> Dict[str, Any]:
+        self, messages: List[Dict[str, str]], temperature: float = 0, top_p: float = 1.0, top_k: int = -1) -> Dict[str, Any]:
         """Query the LLM with the messages and measure execution time."""
         response = None
         retries = 0
@@ -201,6 +201,8 @@ class Agent:
                     kwargs = {}
                 if "o3" not in self.llm_name and "o4" not in self.llm_name:
                     kwargs["temperature"] = temperature
+                    kwargs["top_p"] = top_p
+                    kwargs["top_k"] = top_k
                 response = litellm.completion(
                     model=self.llm_name,
                     tools=tools,
@@ -442,6 +444,9 @@ class Agent:
                 thought, action = self.custom_parser(response)
             else:
                 thought, action = self.parse_response(assistant_message)
+
+            if reasoning_content := response.choices[0].message.get("reasoning_content", None):
+                thought = reasoning_content
 
             action_str = action.to_xml_string()
             self.logger.info(f"THOUGHT:\n{thought}\n")

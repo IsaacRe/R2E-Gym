@@ -1,0 +1,17 @@
+time python src/r2egym/agenthub/run/edit.py runagent_multiple \
+    --traj_dir "./traj" \
+    --max_workers 32 \
+    --start_idx 0 \
+    --k 500 \
+    --dataset "R2E-Gym/SWE-Bench-Verified" \
+    --split "test" \
+    --llm_name "hosted_vllm/saves/SWE-smith-Qwen3-32B-Agent-full-cont/checkpoint-1800/inference" \
+    --scaffold "r2egym" \
+    --use_fn_calling False \
+    --exp_name "eval-r2e-swe-smith" \
+    --temperature "0.0" \
+    --max_steps 75 \
+    --max_steps_absolute 100 \
+    --backend "docker" \
+    --max_reward_calc_time 1200 \
+    --max_tokens 130000

@@ -1,0 +1,16 @@
+time python src/r2egym/agenthub/run/edit.py runagent_multiple \
+    --traj_dir "./traj" \
+    --max_workers 32 \
+    --start_idx 0 \
+    --k 500 \
+    --dataset "R2E-Gym/SWE-Bench-Verified" \
+    --split "test" \
+    --llm_name "hosted_vllm/agentica-org/DeepSWE-Preview" \
+    --scaffold "r2egym" \
+    --use_fn_calling False \
+    --exp_name "eval-deepswe" \
+    --temperature "0.6" \
+    --max_steps_absolute 100 \
+    --backend "docker" \
+    --max_reward_calc_time 1200 \
+    --max_tokens 65536
